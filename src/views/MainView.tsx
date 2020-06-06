@@ -11,6 +11,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import MenuIcon from '@material-ui/icons/Menu';
 import CalculatorView from './CalculatorView';
+import HistoryView from './HistoryView';
 import SwipeableViews from 'react-swipeable-views';
 import {
 
@@ -48,6 +49,10 @@ const useStyles = makeStyles((theme: Theme) =>
             alignSelf: 'flex-start',
             marginTop: 7
         },
+        viewContainer: {
+            height: "100%",
+            width: "100%"
+        }
     }));
 
 const MainView: React.FC<{}> = () => {
@@ -60,6 +65,14 @@ const MainView: React.FC<{}> = () => {
     const handleChangeIndex = (index: number) => {
         setActiveHistory(index === 0 ? false : true);
     };
+    const tabsArray = [
+        <div key="Calculation" dir={theme.direction} className={classes.viewContainer}>
+            <CalculatorView />
+        </div>,
+        <div key="History" dir={theme.direction} className={classes.viewContainer}>
+            <HistoryView />
+        </div>
+    ]
     return (
         <div className={classes.mainContainer}>
             <AppBar position="static">
@@ -86,6 +99,9 @@ const MainView: React.FC<{}> = () => {
                     <Tab label="History" {...a11yProps(1)} />
                 </Tabs>
             </AppBar>
+            <div style={{flex: 1}}>
+
+            
             <SwipeableViews
                 axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                 index={activeHistory ? 1 : 0}
@@ -93,13 +109,9 @@ const MainView: React.FC<{}> = () => {
                 containerStyle={{height: "100%"}}
                 style={{height: "100%"}}
             >
-                <TabPanel value={0} index={0} dir={theme.direction} style={{height: "100%"}}>
-                    <CalculatorView />
-                </TabPanel>
-                <TabPanel value={1} index={1} dir={theme.direction}>
-                    History
-                </TabPanel>
+               {tabsArray.map(el => el)}
             </SwipeableViews>
+            </div>
         </div >
     )
 }
@@ -110,25 +122,4 @@ function a11yProps(index: number) {
         id: `simple-tab-${index === 0 ? "calculate" : "hystory"}`,
         'aria-controls': `simple-tabpanel-${index === 0 ? "calculate" : "hystory"}`,
     };
-}
-
-function TabPanel(props : any) {
-    const { children, value, index, ...other } = props;
-
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`full-width-tabpanel-${index}`}
-            aria-labelledby={`full-width-tab-${index}`}
-            {...other}
-            style={{height: "100%"}}
-        >
-            {value === index && (
-                <div style={{height: "100%"}}>
-                    {children}
-                </div>
-            )}
-        </div>
-    );
 }
