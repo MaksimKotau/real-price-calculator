@@ -1,9 +1,12 @@
 import React from 'react';
 import MainView from './views/MainView'
+import StoreProvider from './state/state'
 
 function App() {
   return (
-    <MainView />
+    <StoreProvider>
+      <MainView />
+    </StoreProvider>
   );
 }
 
