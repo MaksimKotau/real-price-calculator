@@ -1,18 +1,16 @@
-import React, { useState } from 'react'
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import createStyles from '@material-ui/core/styles/createStyles';
-import { Theme } from '@material-ui/core/styles/createMuiTheme';
-import Select from '@material-ui/core/Select';
-import FormControl from '@material-ui/core/FormControl';
-import WeightType from '../../enums/weightType';
-import InputLabel from '@material-ui/core/InputLabel';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import DialogActions from '@material-ui/core/DialogActions';
-import { withLocalStorageCache, getInitialState } from '../../state/utils';
-import { appReducer, addDataToWeightCompare } from '../../state/state';
-import Paper from '@material-ui/core/Paper';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import { Theme } from '@material-ui/core/styles/createMuiTheme';
+import createStyles from '@material-ui/core/styles/createStyles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
+import TextField from '@material-ui/core/TextField';
+import React, { useState } from 'react';
+import WeightType from '../../enums/weightType';
+import { addDataToWeightCompareAndHistory, useStore } from '../../state/state';
 
 
 interface OwnProps {
@@ -33,6 +31,10 @@ const useStyles = makeStyles((theme: Theme) =>
             position: "relative",
             padding: "10px 15% 10px 15%",
             boxSizing: "border-box",
+        },
+        drawerRoot: {
+            borderTopLeftRadius: 10,
+            borderTopRightRadius: 10
         }
     }));
 
@@ -51,27 +53,26 @@ const WeightForm: React.FC<OwnProps> = (props) => {
         setProductPrice(parseFloat(event.target.value));
     };
 
-    const [state, dispatch] = React.useReducer(
-        withLocalStorageCache(appReducer),
-        getInitialState()
-    )
+    const {dispatch} = useStore()
     const handleAddToCompare = () => {
-        dispatch(addDataToWeightCompare({count: productWeight, price: productPrice, unitType}));
-        props.handleClose();
+        addDataToWeightCompareAndHistory(dispatch,{count: productWeight, price: productPrice, unitType, id: (new Date()).getTime()});
         setUnitType(WeightType.gram);
         setProductPrice(0.0);
         setProductWeight(0.0);
+        props.handleClose();
     }
     const handleCancel = () => {
         props.handleClose();
     }
-    console.log(state);
     return (
         <SwipeableDrawer
             anchor={"bottom"}
             open={props.isOpen}
             onClose={props.handleClose}
             onOpen={() => { }}
+            classes={{
+                root: classes.drawerRoot
+            }}
         >
             <div className={classes.mainContainer}>
                 <FormControl
