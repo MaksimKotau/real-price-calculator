@@ -1,5 +1,5 @@
 {
-  "name": "weight-price-comparison",
+  "name": "real-price-calculator",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
