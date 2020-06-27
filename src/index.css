@@ -23,3 +23,22 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+.itemTransition-enter {
+  left: -100vw;
+  position: absolute;
+}
+.itemTransition-enter-active {
+  left: 0;
+  position: relative;
+  transition: all 250ms ease-in;
+}
+.itemTransition-exit {
+  left: 0;
+  position: absolute;
+}
+.itemTransition-exit-active {
+  left: -100vw;
+  transition: all 250ms ease-in;
+  position: relative;
+}
