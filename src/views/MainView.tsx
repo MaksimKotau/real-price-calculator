@@ -108,6 +108,7 @@ const MainView: React.FC<{}> = () => {
                 onChangeIndex={handleChangeIndex}
                 containerStyle={{height: "100%"}}
                 style={{height: "100%"}}
+                disabled
             >
                {tabsArray.map(el => el)}
             </SwipeableViews>
