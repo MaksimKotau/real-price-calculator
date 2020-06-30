@@ -19,3 +19,8 @@ export const ouncesToKilogramm = 0.0283495231;
 export const kilogrammToGramm = 1000;
 export const kilogrammToPounds = 2.2046226218;
 export const kilogrammToOunces = 35.27396195;
+
+export const HISTORY_SIZE = 50;
+
+export const BEST_PRICE_COLOR  = "#4CAF50";
+export const PIRE_PRICE_COLOR = "#D3362F";
