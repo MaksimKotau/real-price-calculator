@@ -18,6 +18,7 @@ import CalculationType from "../enums/calculationType";
 import { createContext, useReducer, useContext } from "react";
 import { getInitialState, withLocalStorageCache } from "./utils";
 import React from 'react';
+import { HISTORY_SIZE } from "../service/constants";
 
 export interface ActionType<T> {
     type: T;
@@ -296,7 +297,7 @@ const getStateHistory = (state: ApplicationState, type: CalculationType): Applic
                     data: state.calculation[StateKeys[type as number] as keyof CalculationState]
                 },
                 ...state.history
-            ]
+            ].slice(0,HISTORY_SIZE)
         }
     }
 }

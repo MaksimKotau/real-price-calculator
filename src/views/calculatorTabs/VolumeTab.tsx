@@ -10,20 +10,10 @@ import VolumeForm from './VolumeForm';
 const VolumeTab: React.FC<{}> = () => {
     const [isFormOpen, setFormOpen] = useState<boolean>(false);
     const { state, dispatch } = useStore();
-    const renderElement = (el: VolumeCompareData) => {
-        return (
-            <>
-                <Typography variant="subtitle2">{`Units: ${el.unitType}`}</Typography>
-                <Typography variant="subtitle2">{`Volume: ${el.count}`}</Typography>
-                <Typography variant="subtitle2">{`Price: ${el.price}`}</Typography>
-                <Typography variant="subtitle2">{`REAL PRICE FOR 100ml: ${getPriceBy100ml(el.unitType, el.count, el.price)}`}</Typography>
-            </>
-        )
-    }
     const elements: SwipableListElement[] = state.calculation.volume.map(el => ({
         id: el.id,
         swipeAction: () => removeDataFromVolumeAndSaveToHistory(dispatch, el.id),
-        renderFunction: () => renderElement(el)
+        renderFunction: () => renderVolumeElement(el)
     }));
     return (
         <div style={{ width: "100%", height: "100%", position: "relative" }}>
@@ -46,4 +36,15 @@ export const getPriceBy100ml = (unitType: VolumeType, count: number, price: numb
     const conversionCoefficient = convertVolume(VolumeType.milliliter, unitType, 1);
     const priceFor_1ml = priceForOneUnit * conversionCoefficient;
     return priceFor_1ml * 100;
+}
+
+export const renderVolumeElement = (el: VolumeCompareData) => {
+    return (
+        <>
+            <Typography variant="subtitle2">{`Units: ${el.unitType}`}</Typography>
+            <Typography variant="subtitle2">{`Volume: ${el.count}`}</Typography>
+            <Typography variant="subtitle2">{`Price: ${el.price}`}</Typography>
+            <Typography variant="subtitle2">{`REAL PRICE FOR 100ml: ${getPriceBy100ml(el.unitType, el.count, el.price).toFixed(2)}`}</Typography>
+        </>
+    )
 }

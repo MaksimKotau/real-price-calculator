@@ -13,10 +13,12 @@ export interface SwipableListElement {
     id: number
     swipeAction: () => void;
     renderFunction: () => JSX.Element;
+    onElementClick?: () => void;
 }
 
 interface SwipableListProps {
     elements: SwipableListElement[];
+    disableDelete?: boolean;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -47,9 +49,7 @@ const SwipableList: React.FC<SwipableListProps> = (props) => {
     const theme = useTheme();
     return (
         <div className={classes.cardsContainer}>
-            <TransitionGroup
-                transitionName="course-item"
-            >
+            <TransitionGroup>
                 {props.elements.map((el) => {
                     return (
                         <Fade
@@ -59,7 +59,7 @@ const SwipableList: React.FC<SwipableListProps> = (props) => {
                         >
                             <div className={classes.cardContainer}>
                                 <SwipableCard
-                                    swipeDirections={["left"]}
+                                    swipeDirections={props.disableDelete ? [] : ["left"]}
                                     backgroundStyle={{ borderRadius: 4 }}
                                     backgroundColorSwipeLeft={theme.palette.secondary.main}
                                     backgroundColorSwipeRight={theme.palette.secondary.main}
@@ -68,6 +68,7 @@ const SwipableList: React.FC<SwipableListProps> = (props) => {
                                     swipeRightAction={() => {
                                         el.swipeAction()
                                     }}
+                                    onClick={el.onElementClick}
                                 >
                                     <Paper className={classes.paperStyle}>
                                         {el.renderFunction()}

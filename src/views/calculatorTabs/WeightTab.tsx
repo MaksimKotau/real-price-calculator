@@ -10,20 +10,10 @@ import WeightForm from './WeightForm';
 const WeightTab: React.FC<{}> = () => {
     const [isFormOpen, setFormOpen] = useState<boolean>(false);
     const { state, dispatch } = useStore();
-    const renderElement = (el: WeightCompareData) => {
-        return (
-            <>
-                <Typography variant="subtitle2">{`Units: ${el.unitType}`}</Typography>
-                <Typography variant="subtitle2">{`Weight: ${el.count}`}</Typography>
-                <Typography variant="subtitle2">{`Price: ${el.price}`}</Typography>
-                <Typography variant="subtitle2">{`REAL PRICE FOR 100g: ${getPriceBy100g(el.unitType, el.count, el.price)}`}</Typography>
-            </>
-        )
-    }
     const elements: SwipableListElement[] = state.calculation.weight.map(el => ({
         id: el.id,
         swipeAction: () => removeDataFromWeightAndSaveToHistory(dispatch, el.id),
-        renderFunction: () => renderElement(el)
+        renderFunction: () => renderWeightElement(el)
     }));
     return (
         <div style={{ width: "100%", height: "100%", position: "relative" }}>
@@ -46,4 +36,15 @@ export const getPriceBy100g = (unitType: WeightType, count: number, price: numbe
     const conversionCoefficient = convertWeight(WeightType.gram, unitType, 1);
     const priceFor_1g = priceForOneUnit * conversionCoefficient;
     return priceFor_1g * 100;
+}
+
+export const renderWeightElement = (el: WeightCompareData) => {
+    return (
+        <>
+            <Typography variant="subtitle2">{`Units: ${el.unitType}`}</Typography>
+            <Typography variant="subtitle2">{`Weight: ${el.count}`}</Typography>
+            <Typography variant="subtitle2">{`Price: ${el.price}`}</Typography>
+            <Typography variant="subtitle2">{`REAL PRICE FOR 100g: ${getPriceBy100g(el.unitType, el.count, el.price).toFixed(2)}`}</Typography>
+        </>
+    )
 }

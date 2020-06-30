@@ -15,6 +15,7 @@ interface OwnProps {
     swipeTreshhold?: number;
     swipeLeftAction?: () => void;
     swipeRightAction?: () => void;
+    onClick?: () => void;
 }
 
 
@@ -83,6 +84,7 @@ const SwipableCard: React.FC<OwnProps> = (props) => {
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
+                onClick={props.onClick}
             >
                 {props.children}
             </div>
