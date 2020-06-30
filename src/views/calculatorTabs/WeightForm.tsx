@@ -62,6 +62,9 @@ const WeightForm: React.FC<OwnProps> = (props) => {
         props.handleClose();
     }
     const handleCancel = () => {
+        setUnitType(WeightType.gram);
+        setProductPrice(0.0);
+        setProductWeight(0.0);
         props.handleClose();
     }
     return (
@@ -108,7 +111,7 @@ const WeightForm: React.FC<OwnProps> = (props) => {
                         type="number"
                         inputProps={{ inputMode: 'numeric' }}
                         label="Weight"
-                        value={productWeight}
+                        value={Number(productWeight).toString()}
                         onChange={changeProductWeight}
                     />
                 </FormControl>
@@ -121,7 +124,7 @@ const WeightForm: React.FC<OwnProps> = (props) => {
                         type="number"
                         inputProps={{ inputMode: 'numeric' }}
                         label="Price"
-                        value={productPrice}
+                        value={Number(productPrice).toString()}
                         onChange={changeProductPrice}
                     />
                 </FormControl>

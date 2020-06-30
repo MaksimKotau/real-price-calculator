@@ -62,6 +62,9 @@ const VolumeForm: React.FC<OwnProps> = (props) => {
         props.handleClose();
     }
     const handleCancel = () => {
+        setUnitType(VolumeType.milliliter);
+        setProductPrice(0.0);
+        setProductVolume(0.0);
         props.handleClose();
     }
     return (
@@ -109,7 +112,7 @@ const VolumeForm: React.FC<OwnProps> = (props) => {
                         type="number"
                         inputProps={{ inputMode: 'numeric' }}
                         label="Volume"
-                        value={productVolume}
+                        value={Number(productVolume).toString()}
                         onChange={changeProductVolume}
                     />
                 </FormControl>
@@ -122,7 +125,7 @@ const VolumeForm: React.FC<OwnProps> = (props) => {
                         type="number"
                         inputProps={{ inputMode: 'numeric' }}
                         label="Price"
-                        value={productPrice}
+                        value={Number(productPrice).toString()}
                         onChange={changeProductPrice}
                     />
                 </FormControl>

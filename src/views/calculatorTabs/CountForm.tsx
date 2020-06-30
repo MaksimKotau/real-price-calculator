@@ -57,6 +57,8 @@ const CountForm: React.FC<OwnProps> = (props) => {
         props.handleClose();
     }
     const handleCancel = () => {
+        setProductPrice(0.0);
+        setProductCount(0.0);
         props.handleClose();
     }
     return (
@@ -79,7 +81,7 @@ const CountForm: React.FC<OwnProps> = (props) => {
                         type="number"
                         inputProps={{ inputMode: 'numeric' }}
                         label="Count"
-                        value={productCount}
+                        value={Number(productCount).toString()}
                         onChange={changeProductCount}
                     />
                 </FormControl>
@@ -92,7 +94,7 @@ const CountForm: React.FC<OwnProps> = (props) => {
                         type="number"
                         inputProps={{ inputMode: 'numeric' }}
                         label="Price"
-                        value={productPrice}
+                        value={Number(productPrice).toString()}
                         onChange={changeProductPrice}
                     />
                 </FormControl>
