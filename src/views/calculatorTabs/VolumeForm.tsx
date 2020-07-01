@@ -11,6 +11,7 @@ import TextField from '@material-ui/core/TextField';
 import React, { useState } from 'react';
 import VolumeType from '../../enums/volumeType';
 import { addDataToVolumeCompareAndHistory, useStore } from '../../state/state';
+import NumberField from '../../components/NumberField';
 
 
 interface OwnProps {
@@ -46,11 +47,11 @@ const VolumeForm: React.FC<OwnProps> = (props) => {
     const changeUnitType = (event: React.ChangeEvent<{ value: unknown }>) => {
         setUnitType(event.target.value as VolumeType);
     }
-    const changeProductVolume = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setProductVolume(parseFloat(event.target.value));
+    const changeProductVolume = (value: number) => {
+        setProductVolume(value);
     };
-    const changeProductPrice = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setProductPrice(parseFloat(event.target.value));
+    const changeProductPrice = (value: number) => {
+        setProductPrice(value);
     };
 
     const {dispatch} = useStore()
@@ -107,12 +108,9 @@ const VolumeForm: React.FC<OwnProps> = (props) => {
                     className={classes.formControl}
                     fullWidth
                 >
-                    <TextField
-                        variant="outlined"
-                        type="number"
-                        inputProps={{ inputMode: 'numeric' }}
+                    <NumberField
                         label="Volume"
-                        value={Number(productVolume).toString()}
+                        value={productVolume}
                         onChange={changeProductVolume}
                     />
                 </FormControl>
@@ -120,12 +118,9 @@ const VolumeForm: React.FC<OwnProps> = (props) => {
                     className={classes.formControl}
                     fullWidth
                 >
-                    <TextField
-                        variant="outlined"
-                        type="number"
-                        inputProps={{ inputMode: 'numeric' }}
+                    <NumberField
                         label="Price"
-                        value={Number(productPrice).toString()}
+                        value={productPrice}
                         onChange={changeProductPrice}
                     />
                 </FormControl>

@@ -11,6 +11,7 @@ import TextField from '@material-ui/core/TextField';
 import React, { useState } from 'react';
 import VolumeType from '../../enums/volumeType';
 import { useStore, addDataToCountCompareAndHistory } from '../../state/state';
+import NumberField from '../../components/NumberField';
 
 
 interface OwnProps {
@@ -42,11 +43,11 @@ const CountForm: React.FC<OwnProps> = (props) => {
     const classes = useStyles();
     const [productCount, setProductCount] = useState<number>(0.0);
     const [productPrice, setProductPrice] = useState<number>(0.0);
-    const changeProductCount = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setProductCount(parseFloat(event.target.value));
+    const changeProductCount = (value: number) => {
+        setProductCount(value);
     };
-    const changeProductPrice = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setProductPrice(parseFloat(event.target.value));
+    const changeProductPrice = (value: number) => {
+        setProductPrice(value);
     };
 
     const {dispatch} = useStore()
@@ -76,12 +77,9 @@ const CountForm: React.FC<OwnProps> = (props) => {
                     className={classes.formControl}
                     fullWidth
                 >
-                    <TextField
-                        variant="outlined"
-                        type="number"
-                        inputProps={{ inputMode: 'numeric' }}
+                    <NumberField
                         label="Count"
-                        value={Number(productCount).toString()}
+                        value={productCount}
                         onChange={changeProductCount}
                     />
                 </FormControl>
@@ -89,12 +87,9 @@ const CountForm: React.FC<OwnProps> = (props) => {
                     className={classes.formControl}
                     fullWidth
                 >
-                    <TextField
-                        variant="outlined"
-                        type="number"
-                        inputProps={{ inputMode: 'numeric' }}
+                    <NumberField
                         label="Price"
-                        value={Number(productPrice).toString()}
+                        value={productPrice}
                         onChange={changeProductPrice}
                     />
                 </FormControl>

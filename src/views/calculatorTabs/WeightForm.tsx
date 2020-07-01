@@ -11,6 +11,7 @@ import TextField from '@material-ui/core/TextField';
 import React, { useState } from 'react';
 import WeightType from '../../enums/weightType';
 import { addDataToWeightCompareAndHistory, useStore } from '../../state/state';
+import NumberField from '../../components/NumberField';
 
 
 interface OwnProps {
@@ -46,11 +47,11 @@ const WeightForm: React.FC<OwnProps> = (props) => {
     const changeUnitType = (event: React.ChangeEvent<{ value: unknown }>) => {
         setUnitType(event.target.value as WeightType);
     }
-    const changeProductWeight = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setProductWeight(parseFloat(event.target.value));
+    const changeProductWeight = (value: number) => {
+        setProductWeight(value);
     };
-    const changeProductPrice = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setProductPrice(parseFloat(event.target.value));
+    const changeProductPrice = (value: number) => {
+        setProductPrice(value);
     };
 
     const {dispatch} = useStore()
@@ -106,12 +107,9 @@ const WeightForm: React.FC<OwnProps> = (props) => {
                     className={classes.formControl}
                     fullWidth
                 >
-                    <TextField
-                        variant="outlined"
-                        type="number"
-                        inputProps={{ inputMode: 'numeric' }}
+                    <NumberField
                         label="Weight"
-                        value={Number(productWeight).toString()}
+                        value={productWeight}
                         onChange={changeProductWeight}
                     />
                 </FormControl>
@@ -119,13 +117,10 @@ const WeightForm: React.FC<OwnProps> = (props) => {
                     className={classes.formControl}
                     fullWidth
                 >
-                    <TextField
-                        variant="outlined"
-                        type="number"
-                        inputProps={{ inputMode: 'numeric' }}
-                        label="Price"
-                        value={Number(productPrice).toString()}
+                    <NumberField 
+                        value={productPrice}
                         onChange={changeProductPrice}
+                        label="Price"
                     />
                 </FormControl>
                 <FormControl
