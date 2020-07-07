@@ -7,11 +7,10 @@ import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import createStyles from '@material-ui/core/styles/createStyles';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import TextField from '@material-ui/core/TextField';
 import React, { useState } from 'react';
+import NumberField from '../../components/NumberField';
 import WeightType from '../../enums/weightType';
 import { addDataToWeightCompareAndHistory, useStore } from '../../state/state';
-import NumberField from '../../components/NumberField';
 
 
 interface OwnProps {

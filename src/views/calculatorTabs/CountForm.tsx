@@ -1,17 +1,13 @@
 import Button from '@material-ui/core/Button';
 import DialogActions from '@material-ui/core/DialogActions';
 import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import createStyles from '@material-ui/core/styles/createStyles';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import TextField from '@material-ui/core/TextField';
 import React, { useState } from 'react';
-import VolumeType from '../../enums/volumeType';
-import { useStore, addDataToCountCompareAndHistory } from '../../state/state';
 import NumberField from '../../components/NumberField';
+import { addDataToCountCompareAndHistory, useStore } from '../../state/state';
 
 
 interface OwnProps {

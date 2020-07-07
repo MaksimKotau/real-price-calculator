@@ -1,25 +1,19 @@
-import React, { useState } from 'react';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import createStyles from '@material-ui/core/styles/createStyles';
-import { Theme } from '@material-ui/core/styles/createMuiTheme';
-import useTheme from '@material-ui/core/styles/useTheme';
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import Tabs from '@material-ui/core/Tabs';
+import { Theme } from '@material-ui/core/styles/createMuiTheme';
+import createStyles from '@material-ui/core/styles/createStyles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import useTheme from '@material-ui/core/styles/useTheme';
 import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
+import React, { useState } from 'react';
+import { isBrowser } from "react-device-detect";
+import SwipeableViews from 'react-swipeable-views';
 import CalculatorView from './CalculatorView';
 import HistoryView from './HistoryView';
-import SwipeableViews from 'react-swipeable-views';
-import {
-
-    isBrowser,
-    isMobile,
-    isTablet
-} from "react-device-detect";
-import Box from '@material-ui/core/Box';
 
 
 const useStyles = makeStyles((theme: Theme) =>
