@@ -17,8 +17,9 @@ const WeightTab: React.FC<{}> = () => {
         id: el.id,
         swipeAction: () => removeDataFromWeightAndSaveToHistory(dispatch, el.id),
         renderFunction: () => renderWeightElement(el),
-        backgroundColor: el.id === maxId ? PIRE_PRICE_COLOR : (el.id === minId ? BEST_PRICE_COLOR : undefined) 
+        border: el.id === maxId ? `2px solid ${PIRE_PRICE_COLOR}` : (el.id === minId ? `2px solid ${BEST_PRICE_COLOR}` : undefined) 
     }));
+    console.log("rerender")
     return (
         <div style={{ width: "100%", height: "100%", position: "relative" }}>
             <SwipableList
@@ -56,14 +57,16 @@ export const renderWeightElement = (el: WeightCompareData) => {
 export const getWeightMinId = (data: WeightCompareData[]) => {
     if (data.length < 2)
         return undefined;
-    let minId = data[0].id;
     //check if all prices the same
     if (data.every(el => Math.abs(getPriceBy100g(el.unitType, el.count, el.price) - getPriceBy100g(data[0].unitType, data[0].count, data[0].price)) < 0.01)){
         return undefined
     }
+    let indexMin = 0;
+    let minId = data[indexMin].id;
     for (let i = 1; i< data.length; i++){
-        if (getPriceBy100g(data[i].unitType, data[i].count, data[i].price) < getPriceBy100g(data[0].unitType, data[0].count, data[0].price)){
+        if (getPriceBy100g(data[i].unitType, data[i].count, data[i].price) < getPriceBy100g(data[indexMin].unitType, data[indexMin].count, data[indexMin].price)){
             minId = data[i].id;
+            indexMin = i;
         }
     }
     return minId;
@@ -72,14 +75,17 @@ export const getWeightMinId = (data: WeightCompareData[]) => {
 export const getWeightMaxId = (data: WeightCompareData[]) => {
     if (data.length < 2)
         return undefined;
-    let maxId = data[0].id;
+    
     //check if all prices the same
     if (data.every(el => Math.abs(getPriceBy100g(el.unitType, el.count, el.price) - getPriceBy100g(data[0].unitType, data[0].count, data[0].price)) < 0.01)){
         return undefined
     }
+    let indexMax = 0;
+    let maxId = data[indexMax].id;
     for (let i = 1; i< data.length; i++){
-        if (getPriceBy100g(data[i].unitType, data[i].count, data[i].price) > getPriceBy100g(data[0].unitType, data[0].count, data[0].price)){
+        if (getPriceBy100g(data[i].unitType, data[i].count, data[i].price) > getPriceBy100g(data[indexMax].unitType, data[indexMax].count, data[indexMax].price)){
             maxId = data[i].id;
+            indexMax = i;
         }
     }
     return maxId;

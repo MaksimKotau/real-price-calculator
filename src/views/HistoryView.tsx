@@ -7,7 +7,12 @@ import React, { useState, useEffect } from 'react';
 import SwipableList, { SwipableListElement } from '../components/SwipableList';
 import CalculationType from '../enums/calculationType';
 import { useCompareRenderFunction } from '../service/hooks/useCompareRenderFunction';
-import { HistoryData, removeFromHistory, useStore } from '../state/state';
+import { HistoryData, removeFromHistory, useStore, CountCompareData, WeightCompareData, VolumeCompareData } from '../state/state';
+import {getCountMaxId, getCountMinId} from './calculatorTabs/CountTab';
+import {getVolumeMaxId, getVolumeMinId} from './calculatorTabs/VolumeTab';
+import {getWeightMaxId, getWeightMinId} from './calculatorTabs/WeightTab';
+import { PIRE_PRICE_COLOR, BEST_PRICE_COLOR } from '../service/constants';
+
 
 const HistoryView: React.FC<{}> = () => {
     const { state, dispatch } = useStore();
@@ -29,7 +34,7 @@ const HistoryView: React.FC<{}> = () => {
         id: el.date,
         swipeAction: () => dispatch(removeFromHistory(el.date)),
         renderFunction: () => renderElement(el),
-        onElementClick: () => setRenderData(el)
+        onElementClick: () => setRenderData(el),
     }));
     return (
         <div style={{ width: "100%", height: "100%", position: "relative" }}>
@@ -50,13 +55,16 @@ const HistoryElement: React.FC<{ data: HistoryData | null, onClose: () => void }
     const renderElement = useCompareRenderFunction(props.data ? props.data.type : null);
     let elements: SwipableListElement[] = [];
     if (props.data && renderElement) {
+        const maxId = getMaxId(props.data.data, props.data.type);
+        const minId = getMinId(props.data.data, props.data.type);
         elements = (props.data!.data as any[]).map((el: any) => ({
             id: el.id,
             swipeAction: () => { },
-            renderFunction: () => renderElement(el)
+            renderFunction: () => renderElement(el),
+            border: el.id === maxId ? `2px solid ${PIRE_PRICE_COLOR}` : (el.id === minId ? `2px solid ${BEST_PRICE_COLOR}` : undefined) 
         } as SwipableListElement));
     }
-    if (!props.data) 
+    if (!props.data)
         return null
     return (
         <Slide direction="up" in={Boolean(props.data)} mountOnEnter unmountOnExit>
@@ -68,14 +76,14 @@ const HistoryElement: React.FC<{ data: HistoryData | null, onClose: () => void }
                 }}
             >
                 <Paper style={{ position: "absolute", width: "100%", height: "100%", display: "flex", flexDirection: "column" }} square>
-                    <div style={{height: 105}}>
+                    <div style={{ height: 105 }}>
                         <IconButton
-                            style={{marginLeft: 10}}
+                            style={{ marginLeft: 10 }}
                             onClick={props.onClose}
                         >
-                            <CloseIcon/>
+                            <CloseIcon />
                         </IconButton>
-                        <div style={{marginLeft: 40}}>
+                        <div style={{ marginLeft: 40 }}>
                             <Typography>
                                 Type: {CalculationType[props.data.type]}
                             </Typography>
@@ -94,4 +102,26 @@ const HistoryElement: React.FC<{ data: HistoryData | null, onClose: () => void }
             </div>
         </Slide >
     )
+}
+
+const getMinId = (data: CountCompareData[] | WeightCompareData[] | VolumeCompareData[], type: CalculationType) => {
+    switch (type){
+        case CalculationType.VOLUME:
+            return getVolumeMinId(data as VolumeCompareData[]);
+        case CalculationType.WEIGHT:
+            return getWeightMinId(data as WeightCompareData[]);
+        default:   
+            return getCountMinId(data as CountCompareData[]);
+    }
+}
+
+const getMaxId = (data: CountCompareData[] | WeightCompareData[] | VolumeCompareData[], type: CalculationType) => {
+    switch (type){
+        case CalculationType.VOLUME:
+            return getVolumeMaxId(data as VolumeCompareData[]);
+        case CalculationType.WEIGHT:
+            return getWeightMaxId(data as WeightCompareData[]);
+        default:   
+            return getCountMaxId(data as CountCompareData[]);
+    }
 }
