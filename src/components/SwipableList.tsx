@@ -11,7 +11,7 @@ import SwipableCard from './card/SwipableCard';
 
 export interface SwipableListElement {
     id: number;
-    backgroundColor?: string;
+    border?: string;
     swipeAction: () => void;
     renderFunction: () => JSX.Element;
     onElementClick?: () => void;
@@ -71,7 +71,7 @@ const SwipableList: React.FC<SwipableListProps> = (props) => {
                                     }}
                                     onClick={el.onElementClick}
                                 >
-                                    <Paper className={classes.paperStyle} style={{backgroundColor: el.backgroundColor}}>
+                                    <Paper className={classes.paperStyle} style={{border: el.border}}>
                                         {el.renderFunction()}
                                     </Paper>
                                 </SwipableCard>
