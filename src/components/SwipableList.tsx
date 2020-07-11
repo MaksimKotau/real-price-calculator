@@ -31,11 +31,12 @@ const useStyles = makeStyles((theme: Theme) =>
             flexDirection: "column",
             boxSizing: "border-box",
             overflowY: "auto",
-            position: "absolute"
+            position: "absolute",
+            paddingBottom: 10
         },
         cardContainer: {
             width: "100%",
-            padding: 10,
+            padding: "10px 10px 0 10px",
             boxSizing: "border-box",
             display: "flex",
 
