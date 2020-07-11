@@ -81,7 +81,7 @@ const HistoryElement: React.FC<{ data: HistoryData | null, onClose: () => void }
                             style={{ marginLeft: 10 }}
                             onClick={props.onClose}
                         >
-                            <CloseIcon />
+                            <CloseIcon fontSize="large"/>
                         </IconButton>
                         <div style={{ marginLeft: 40 }}>
                             <Typography>
