@@ -127,10 +127,10 @@ const WeightForm: React.FC<OwnProps> = (props) => {
                     fullWidth
                 >
                     <DialogActions>
-                        <Button onClick={handleCancel} color="primary">
+                        <Button onClick={handleCancel} color="secondary" variant="outlined">
                             Cancel
                         </Button>
-                        <Button onClick={handleAddToCompare} color="primary">
+                        <Button onClick={handleAddToCompare} color="secondary" variant="contained">
                             Add
                         </Button>
                     </DialogActions>
