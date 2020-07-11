@@ -8,29 +8,26 @@ export const withLocalStorageCache = (reducer: any) => {
     }
 };
 
+const defaultState: ApplicationState = {
+    calculation: {
+        count: [],
+        volume: [],
+        weight: []
+    },
+    history: [],
+    ui: {
+        isDark: false
+    }
+};
+
 export const getInitialState = (): ApplicationState => {
     if (localStorage.getItem("app-data") !== null) {
         try {
             return JSON.parse(localStorage.getItem("app-data") as string) as unknown as ApplicationState;
         } catch (err) {
-            return {
-                calculation: {
-                    count: [],
-                    volume: [],
-                    weight: []
-                },
-                history: []
-            };
+            return defaultState;
         }
     } else {
-        return {
-            calculation: {
-                count: [],
-                volume: [],
-                weight: []
-            },
-            history: []
-        };
+        return defaultState;
     }
-
 };

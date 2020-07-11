@@ -1,24 +1,32 @@
-import WeightType from "../enums/weightType";
+import React, { createContext, useContext, useReducer } from 'react';
+import CalculationType from "../enums/calculationType";
 import VolumeType from "../enums/volumeType";
+import WeightType from "../enums/weightType";
+import { HISTORY_SIZE } from "../service/constants";
 import {
     ADD_TO_COUNT_COMPARISON,
-    ADD_TO_VOLUME_COMPARISON,
+
+
+
+    ADD_TO_HISTORY, ADD_TO_VOLUME_COMPARISON,
     ADD_TO_WEIGHT_COMPARISON,
-    DELETE_FROM_WEIGHT_COMPARISON,
-    ADD_TO_HISTORY,
-    DELETE_FROM_COUNT_COMPARISON,
-    DELETE_FROM_VOLUME_COMPARISON,
-    DELETE_FROM_HISTORY,
-    CLEAR_HISTORY,
-    CLEAR_COUNT,
+
+
+
+
+
+
+
+
+
+    CHANGE_THEME, CLEAR_COUNT, CLEAR_HISTORY,
+
     CLEAR_VOLUME,
-    CLEAR_WEIGHT
+    CLEAR_WEIGHT, DELETE_FROM_COUNT_COMPARISON,
+
+    DELETE_FROM_HISTORY, DELETE_FROM_VOLUME_COMPARISON, DELETE_FROM_WEIGHT_COMPARISON
 } from './actionTypes';
-import CalculationType from "../enums/calculationType";
-import { createContext, useReducer, useContext } from "react";
 import { getInitialState, withLocalStorageCache } from "./utils";
-import React from 'react';
-import { HISTORY_SIZE } from "../service/constants";
 
 export interface ActionType<T> {
     type: T;
@@ -45,14 +53,19 @@ export interface CalculationState {
 }
 
 export interface HistoryData {
-    date: number, 
-    type: CalculationType, 
+    date: number,
+    type: CalculationType,
     data: CountCompareData[] | WeightCompareData[] | VolumeCompareData[]
+}
+
+export interface UIState {
+    isDark: boolean
 }
 
 export interface ApplicationState {
     calculation: CalculationState,
-    history: HistoryData[]
+    history: HistoryData[],
+    ui: UIState
 }
 
 interface AddToWeightComparaisonAction extends ActionType<"ADD_TO_WEIGHT_COMPARISON"> {
@@ -95,6 +108,9 @@ interface ClearVolumeCompareAction extends ActionType<"CLEAR_VOLUME"> { }
 
 interface ClearCountCompareAction extends ActionType<"CLEAR_COUNT"> { }
 
+interface ChangeThemeAction extends ActionType<"CHANGE_THEME"> {
+    isDark: boolean,
+}
 
 export function addDataToWeightCompare(data: WeightCompareData): AddToWeightComparaisonAction {
     return {
@@ -176,6 +192,12 @@ export function clearCountCompare(): ClearCountCompareAction {
     }
 }
 
+function changeTheme(isDark: boolean): ChangeThemeAction {
+    return {
+        type: CHANGE_THEME,
+        isDark
+    }
+}
 
 
 export type Action = AddToWeightComparaisonAction |
@@ -189,7 +211,8 @@ export type Action = AddToWeightComparaisonAction |
     ClearHistoryAction |
     ClearVolumeCompareAction |
     ClearWeightCompareAction |
-    ClearCountCompareAction;
+    ClearCountCompareAction |
+    ChangeThemeAction;
 
 export function appReducer(state: ApplicationState, action: Action): ApplicationState {
     switch (action.type) {
@@ -277,6 +300,14 @@ export function appReducer(state: ApplicationState, action: Action): Application
                     count: []
                 }
             }
+        case CHANGE_THEME:
+            return {
+                ...state,
+                ui: {
+                    ...state.ui,
+                    isDark: action.isDark
+                }
+            }
         default:
             return state;
     }
@@ -297,7 +328,7 @@ const getStateHistory = (state: ApplicationState, type: CalculationType): Applic
                     data: state.calculation[StateKeys[type as number] as keyof CalculationState]
                 },
                 ...state.history
-            ].slice(0,HISTORY_SIZE)
+            ].slice(0, HISTORY_SIZE)
         }
     }
 }
@@ -349,4 +380,8 @@ export function addDataToCountCompareAndHistory(dispatch: any, data: CountCompar
 export function removeDataFromCountAndSaveToHistory(dispatch: any, id: number) {
     dispatch(removeFromCountCompare(id));
     dispatch(addDataToHistory(CalculationType.COUNT));
+}
+
+export function changeCurrentTheme(dispatch: any, isDark: boolean) {
+    dispatch(changeTheme(isDark))
 }

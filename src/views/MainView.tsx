@@ -14,6 +14,7 @@ import { isBrowser } from "react-device-detect";
 import SwipeableViews from 'react-swipeable-views';
 import CalculatorView from './CalculatorView';
 import HistoryView from './HistoryView';
+import MoreIcon from '@material-ui/icons/MoreVert';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -22,7 +23,8 @@ const useStyles = makeStyles((theme: Theme) =>
             width: "100vw",
             height: "100vh",
             display: "flex",
-            flexDirection: "column"
+            flexDirection: "column",
+            backgroundColor: theme.palette.background.default
         },
         menuButton: {
             marginRight: theme.spacing(2),
@@ -75,13 +77,17 @@ const MainView: React.FC<{}> = () => {
                         edge="start"
                         className={classes.menuButton}
                         color="inherit"
-                        aria-label="open drawer"
                     >
                         <MenuIcon />
                     </IconButton>
                     <Typography className={classes.title} variant="h5" noWrap>
                         Real price calculator
                     </Typography>
+                    <IconButton
+                        color="inherit"
+                    >
+                        <MoreIcon/>
+                    </IconButton>
                 </Toolbar>
                 <Tabs
                     value={activeHistory ? 1 : 0}
