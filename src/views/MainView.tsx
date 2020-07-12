@@ -9,12 +9,13 @@ import Tabs from '@material-ui/core/Tabs';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
-import React, { useState } from 'react';
+import React, { useState, MouseEvent } from 'react';
 import { isBrowser } from "react-device-detect";
 import SwipeableViews from 'react-swipeable-views';
 import CalculatorView from './CalculatorView';
 import HistoryView from './HistoryView';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import SettingsMenu from './menu/SettingsMenu';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -55,12 +56,19 @@ const MainView: React.FC<{}> = () => {
     const theme = useTheme();
     const classes = useStyles();
     const [activeHistory, setActiveHistory] = useState<boolean>(false);
+    const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | undefined>(undefined);
     const handleTabChange = (event: any, newValue: number) => {
         setActiveHistory(newValue === 0 ? false : true);
     };
     const handleChangeIndex = (index: number) => {
         setActiveHistory(index === 0 ? false : true);
     };
+    const handleMenuIconClick = (event: MouseEvent<HTMLElement, Event>) => {
+        setMenuAnchorEl(event.currentTarget)
+    }
+    const handleCloseMenu = () => {
+        setMenuAnchorEl(undefined);
+    }
     const tabsArray = [
         <div key="Calculation" dir={theme.direction} className={classes.viewContainer}>
             <CalculatorView />
@@ -77,6 +85,7 @@ const MainView: React.FC<{}> = () => {
                         edge="start"
                         className={classes.menuButton}
                         color="inherit"
+                        onClick={handleMenuIconClick}
                     >
                         <MenuIcon />
                     </IconButton>
@@ -113,6 +122,10 @@ const MainView: React.FC<{}> = () => {
                {tabsArray.map(el => el)}
             </SwipeableViews>
             </div>
+            <SettingsMenu 
+                anchorEl={menuAnchorEl}
+                onClose={handleCloseMenu}
+            />
         </div >
     )
 }
