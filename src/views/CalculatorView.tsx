@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import createStyles from '@material-ui/core/styles/createStyles';
-import { Theme } from '@material-ui/core/styles/createMuiTheme';
-import BottomNavigation from '@material-ui/core/BottomNavigation'
+import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import CalculationType from '../enums/calculationType';
+import { Theme } from '@material-ui/core/styles/createMuiTheme';
+import createStyles from '@material-ui/core/styles/createStyles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import useTheme from '@material-ui/core/styles/useTheme';
 import WeightIcon from '@material-ui/icons/FitnessCenter';
-import VolumeIcon from '@material-ui/icons/LocalDrink';
 import CountIcon from '@material-ui/icons/GroupWork';
+import VolumeIcon from '@material-ui/icons/LocalDrink';
+import React from 'react';
+import CalculationType from '../enums/calculationType';
 import CountTab from './calculatorTabs/CountTab';
 import VolumeTab from './calculatorTabs/VolumeTab';
 import WeightTab from './calculatorTabs/WeightTab';
-import useTheme from '@material-ui/core/styles/useTheme';
 
 interface OwnProps {
     currentTab: CalculationType;
