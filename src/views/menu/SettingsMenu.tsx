@@ -21,7 +21,6 @@ const SettingsMenu: React.FC<OwnProps> = (props) => {
     }
     return (
         <Menu
-            id="simple-menu"
             anchorEl={props.anchorEl}
             keepMounted
             open={Boolean(props.anchorEl)}

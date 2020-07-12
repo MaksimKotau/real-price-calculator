@@ -5,25 +5,11 @@ import WeightType from "../enums/weightType";
 import { HISTORY_SIZE } from "../service/constants";
 import {
     ADD_TO_COUNT_COMPARISON,
-
-
-
     ADD_TO_HISTORY, ADD_TO_VOLUME_COMPARISON,
     ADD_TO_WEIGHT_COMPARISON,
-
-
-
-
-
-
-
-
-
     CHANGE_THEME, CLEAR_COUNT, CLEAR_HISTORY,
-
     CLEAR_VOLUME,
     CLEAR_WEIGHT, DELETE_FROM_COUNT_COMPARISON,
-
     DELETE_FROM_HISTORY, DELETE_FROM_VOLUME_COMPARISON, DELETE_FROM_WEIGHT_COMPARISON
 } from './actionTypes';
 import { getInitialState, withLocalStorageCache } from "./utils";
