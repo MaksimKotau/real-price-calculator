@@ -39,16 +39,22 @@ const CountForm: React.FC<OwnProps> = (props) => {
     const classes = useStyles();
     const [productCount, setProductCount] = useState<number>(0.0);
     const [productPrice, setProductPrice] = useState<number>(0.0);
+    const [showCountError, setShowCountError] = useState<boolean>(false);
+    const [showPriceError, setShowPriceError] = useState<boolean>(false);
+    const [isPriceValid, setIsPriceValid] = useState<boolean>(false);
+    const [isCountValid, setIsCountValid] = useState<boolean>(false);
     const changeProductCount = (value: number) => {
         setProductCount(value);
+        setShowCountError(true);
     };
     const changeProductPrice = (value: number) => {
         setProductPrice(value);
+        setShowPriceError(true);
     };
 
-    const {dispatch} = useStore()
+    const { dispatch } = useStore()
     const handleAddToCompare = () => {
-        addDataToCountCompareAndHistory(dispatch, {count: productCount, price: productPrice, id: (new Date()).getTime()});
+        addDataToCountCompareAndHistory(dispatch, { count: productCount, price: productPrice, id: (new Date()).getTime() });
         setProductPrice(0.0);
         setProductCount(0.0);
         props.handleClose();
@@ -57,6 +63,19 @@ const CountForm: React.FC<OwnProps> = (props) => {
         setProductPrice(0.0);
         setProductCount(0.0);
         props.handleClose();
+    }
+    const handleCountValidationChange = (result: boolean) => {
+        setIsCountValid(result);
+    }
+    const handlePriceValidationChange = (result: boolean) => {
+        setIsPriceValid(result);
+    }
+    const validateByScheme = (value: number): string | null => {
+        if (value <= 0) {
+            return "Filed value must be more than 0"
+        } else {
+            return null
+        }
     }
     return (
         <SwipeableDrawer
@@ -77,6 +96,9 @@ const CountForm: React.FC<OwnProps> = (props) => {
                         label="Count"
                         value={productCount}
                         onChange={changeProductCount}
+                        validateByScheme={validateByScheme}
+                        showErrors={showCountError}
+                        onValidationResultChange={handleCountValidationChange}
                     />
                 </FormControl>
                 <FormControl
@@ -87,6 +109,9 @@ const CountForm: React.FC<OwnProps> = (props) => {
                         label="Price"
                         value={productPrice}
                         onChange={changeProductPrice}
+                        showErrors={showPriceError}
+                        validateByScheme={validateByScheme}
+                        onValidationResultChange={handlePriceValidationChange}
                     />
                 </FormControl>
                 <FormControl
@@ -97,7 +122,12 @@ const CountForm: React.FC<OwnProps> = (props) => {
                         <Button onClick={handleCancel} color="secondary" variant="outlined">
                             Cancel
                         </Button>
-                        <Button onClick={handleAddToCompare} color="secondary" variant="contained">
+                        <Button
+                            onClick={handleAddToCompare}
+                            color="secondary"
+                            variant="contained"
+                            disabled={!isPriceValid || !isCountValid}
+                        >
                             Add
                         </Button>
                     </DialogActions>

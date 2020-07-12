@@ -43,19 +43,25 @@ const VolumeForm: React.FC<OwnProps> = (props) => {
     const [unitType, setUnitType] = useState<VolumeType>(VolumeType.milliliter);
     const [productVolume, setProductVolume] = useState<number>(0.0);
     const [productPrice, setProductPrice] = useState<number>(0.0);
+    const [showVolumeError, setShowVolumeError] = useState<boolean>(false);
+    const [showPriceError, setShowPriceError] = useState<boolean>(false);
+    const [isPriceValid, setIsPriceValid] = useState<boolean>(false);
+    const [isVolumeValid, setIsVolumeValid] = useState<boolean>(false);
     const changeUnitType = (event: React.ChangeEvent<{ value: unknown }>) => {
         setUnitType(event.target.value as VolumeType);
     }
     const changeProductVolume = (value: number) => {
         setProductVolume(value);
+        setShowVolumeError(true);
     };
     const changeProductPrice = (value: number) => {
         setProductPrice(value);
+        setShowPriceError(true);
     };
 
-    const {dispatch} = useStore()
+    const { dispatch } = useStore()
     const handleAddToCompare = () => {
-        addDataToVolumeCompareAndHistory(dispatch, {count: productVolume, price: productPrice, unitType, id: (new Date()).getTime()});
+        addDataToVolumeCompareAndHistory(dispatch, { count: productVolume, price: productPrice, unitType, id: (new Date()).getTime() });
         setUnitType(VolumeType.milliliter);
         setProductPrice(0.0);
         setProductVolume(0.0);
@@ -66,6 +72,19 @@ const VolumeForm: React.FC<OwnProps> = (props) => {
         setProductPrice(0.0);
         setProductVolume(0.0);
         props.handleClose();
+    }
+    const handleVolumeValidationChange = (result: boolean) => {
+        setIsVolumeValid(result);
+    }
+    const handlePriceValidationChange = (result: boolean) => {
+        setIsPriceValid(result);
+    }
+    const validateByScheme = (value: number): string | null => {
+        if (value <= 0) {
+            return "Filed value must be more than 0"
+        } else {
+            return null
+        }
     }
     return (
         <SwipeableDrawer
@@ -111,6 +130,9 @@ const VolumeForm: React.FC<OwnProps> = (props) => {
                         label="Volume"
                         value={productVolume}
                         onChange={changeProductVolume}
+                        validateByScheme={validateByScheme}
+                        showErrors={showVolumeError}
+                        onValidationResultChange={handleVolumeValidationChange}
                     />
                 </FormControl>
                 <FormControl
@@ -121,6 +143,9 @@ const VolumeForm: React.FC<OwnProps> = (props) => {
                         label="Price"
                         value={productPrice}
                         onChange={changeProductPrice}
+                        showErrors={showPriceError}
+                        validateByScheme={validateByScheme}
+                        onValidationResultChange={handlePriceValidationChange}
                     />
                 </FormControl>
                 <FormControl
@@ -131,7 +156,12 @@ const VolumeForm: React.FC<OwnProps> = (props) => {
                         <Button onClick={handleCancel} color="secondary" variant="outlined">
                             Cancel
                         </Button>
-                        <Button onClick={handleAddToCompare} color="secondary" variant="contained">
+                        <Button
+                            onClick={handleAddToCompare}
+                            color="secondary"
+                            variant="contained"
+                            disabled={!isPriceValid || !isVolumeValid}
+                        >
                             Add
                         </Button>
                     </DialogActions>

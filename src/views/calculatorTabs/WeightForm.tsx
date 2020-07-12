@@ -43,14 +43,20 @@ const WeightForm: React.FC<OwnProps> = (props) => {
     const [unitType, setUnitType] = useState<WeightType>(WeightType.gram);
     const [productWeight, setProductWeight] = useState<number>(0.0);
     const [productPrice, setProductPrice] = useState<number>(0.0);
+    const [showWeightError, setShowWeightError] = useState<boolean>(false);
+    const [showPriceError, setShowPriceError] = useState<boolean>(false);
+    const [isPriceValid, setIsPriceValid] = useState<boolean>(false);
+    const [isWeightValid, setIsWeightValid] = useState<boolean>(false);
     const changeUnitType = (event: React.ChangeEvent<{ value: unknown }>) => {
         setUnitType(event.target.value as WeightType);
     }
     const changeProductWeight = (value: number) => {
         setProductWeight(value);
+        setShowWeightError(true);
     };
     const changeProductPrice = (value: number) => {
         setProductPrice(value);
+        setShowPriceError(true);
     };
 
     const {dispatch} = useStore()
@@ -66,6 +72,19 @@ const WeightForm: React.FC<OwnProps> = (props) => {
         setProductPrice(0.0);
         setProductWeight(0.0);
         props.handleClose();
+    }
+    const handleWightValidationChange = (result: boolean) => {
+        setIsWeightValid(result);
+    }
+    const handlePriceValidationChange = (result: boolean) => {
+        setIsPriceValid(result);
+    }
+    const validateByScheme = (value: number): string | null => {
+        if (value <= 0){
+            return "Filed value must be more than 0"
+        }else {
+            return null
+        }
     }
     return (
         <SwipeableDrawer
@@ -110,6 +129,9 @@ const WeightForm: React.FC<OwnProps> = (props) => {
                         label="Weight"
                         value={productWeight}
                         onChange={changeProductWeight}
+                        validateByScheme={validateByScheme}
+                        showErrors={showWeightError}
+                        onValidationResultChange={handleWightValidationChange}
                     />
                 </FormControl>
                 <FormControl
@@ -120,6 +142,9 @@ const WeightForm: React.FC<OwnProps> = (props) => {
                         value={productPrice}
                         onChange={changeProductPrice}
                         label="Price"
+                        showErrors={showPriceError}
+                        validateByScheme={validateByScheme}
+                        onValidationResultChange={handlePriceValidationChange}
                     />
                 </FormControl>
                 <FormControl
@@ -130,7 +155,12 @@ const WeightForm: React.FC<OwnProps> = (props) => {
                         <Button onClick={handleCancel} color="secondary" variant="outlined">
                             Cancel
                         </Button>
-                        <Button onClick={handleAddToCompare} color="secondary" variant="contained">
+                        <Button 
+                            onClick={handleAddToCompare} 
+                            color="secondary" 
+                            variant="contained"
+                            disabled={!isPriceValid || !isWeightValid}
+                            >
                             Add
                         </Button>
                     </DialogActions>
