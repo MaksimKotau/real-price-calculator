@@ -16,6 +16,9 @@ import CalculatorView from './CalculatorView';
 import HistoryView from './HistoryView';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import SettingsMenu from './menu/SettingsMenu';
+import ClearMenu from './menu/ClearMenu';
+import CalculationType from '../enums/calculationType';
+import {useStore, clearCountCompare,clearHistory, clearVolumeCompare, clearWeightCompare} from '../state/state';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -55,8 +58,11 @@ const useStyles = makeStyles((theme: Theme) =>
 const MainView: React.FC<{}> = () => {
     const theme = useTheme();
     const classes = useStyles();
+    const {dispatch} = useStore();
     const [activeHistory, setActiveHistory] = useState<boolean>(false);
+    const [claculationTab, setCalculationTab] = useState<CalculationType>(CalculationType.WEIGHT);
     const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | undefined>(undefined);
+    const [clearAnchorEl, setClearAnchorEl] = useState<HTMLElement | undefined>(undefined);
     const handleTabChange = (event: any, newValue: number) => {
         setActiveHistory(newValue === 0 ? false : true);
     };
@@ -69,9 +75,53 @@ const MainView: React.FC<{}> = () => {
     const handleCloseMenu = () => {
         setMenuAnchorEl(undefined);
     }
+    const handleClearIconClick = (event: MouseEvent<HTMLElement, Event>) => {
+        setClearAnchorEl(event.currentTarget)
+    }
+    const handleCloseClear = () => {
+        setClearAnchorEl(undefined);
+    }
+    const handleCalculationTabChange = (tab: CalculationType) => {
+        setCalculationTab(tab);
+    }
+    const getClearLabel = ():string => {
+        if (activeHistory){
+            return "Clear History"
+        }else {
+            switch (claculationTab){
+                case CalculationType.COUNT: 
+                    return "Clear Count tab";
+                case CalculationType.VOLUME:
+                    return "Clear Volume tab";
+                case CalculationType.WEIGHT:
+                    return "Clear Weight tab";
+                default:
+                    return "";
+            }
+        }
+    }
+    const getClearFunction = (): () => void => {
+        if (activeHistory){
+            return () => dispatch(clearHistory());
+        }else {
+            switch (claculationTab){
+                case CalculationType.COUNT: 
+                    return () => dispatch(clearCountCompare());
+                case CalculationType.VOLUME:
+                    return () => dispatch(clearVolumeCompare());
+                case CalculationType.WEIGHT:
+                    return () => dispatch(clearWeightCompare());
+                default:
+                    return () => {};
+            }
+        }
+    }
     const tabsArray = [
         <div key="Calculation" dir={theme.direction} className={classes.viewContainer}>
-            <CalculatorView />
+            <CalculatorView 
+                currentTab={claculationTab}
+                onTabChange={handleCalculationTabChange}
+            />
         </div>,
         <div key="History" dir={theme.direction} className={classes.viewContainer}>
             <HistoryView />
@@ -94,6 +144,7 @@ const MainView: React.FC<{}> = () => {
                     </Typography>
                     <IconButton
                         color="inherit"
+                        onClick={handleClearIconClick}
                     >
                         <MoreIcon/>
                     </IconButton>
@@ -125,6 +176,12 @@ const MainView: React.FC<{}> = () => {
             <SettingsMenu 
                 anchorEl={menuAnchorEl}
                 onClose={handleCloseMenu}
+            />
+            <ClearMenu 
+                anchorEl={clearAnchorEl}
+                onClose={handleCloseClear}
+                clearAction={getClearFunction()}
+                clearLabel={getClearLabel()}
             />
         </div >
     )

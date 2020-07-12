@@ -13,6 +13,10 @@ import VolumeTab from './calculatorTabs/VolumeTab';
 import WeightTab from './calculatorTabs/WeightTab';
 import useTheme from '@material-ui/core/styles/useTheme';
 
+interface OwnProps {
+    currentTab: CalculationType;
+    onTabChange: (tab: CalculationType) => void;
+}
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -40,26 +44,25 @@ const useStyles = makeStyles((theme: Theme) =>
 
     }));
 
-const CalculatorView: React.FC<{}> = () => {
-    const [currentTab, setCurrentTab] = useState<CalculationType>(CalculationType.WEIGHT);
+const CalculatorView: React.FC<OwnProps> = (props) => {
     const classes = useStyles();
     const theme = useTheme();
     const handleChange = (event: any, newValue: CalculationType) => {
-        setCurrentTab(newValue);
+        props.onTabChange(newValue);
     };
     return (
         <div className={classes.container}>
             <div className={classes.calculationContainer}>
-                {currentTab === CalculationType.COUNT && <CountTab />}
-                {currentTab === CalculationType.WEIGHT && <WeightTab />}
-                {currentTab === CalculationType.VOLUME && <VolumeTab />}
+                {props.currentTab === CalculationType.COUNT && <CountTab />}
+                {props.currentTab === CalculationType.WEIGHT && <WeightTab />}
+                {props.currentTab === CalculationType.VOLUME && <VolumeTab />}
             </div>
 
-            <BottomNavigation value={currentTab} onChange={handleChange} className={classes.bottomNavigation} showLabels>
+            <BottomNavigation value={props.currentTab} onChange={handleChange} className={classes.bottomNavigation} showLabels>
                 <BottomNavigationAction
                     label="Weight"
                     value={CalculationType.WEIGHT}
-                    icon={<WeightIcon style={{color: currentTab === CalculationType.WEIGHT ? "white" : theme.palette.action.disabled}} />}
+                    icon={<WeightIcon style={{ color: props.currentTab === CalculationType.WEIGHT ? "white" : theme.palette.action.disabled }} />}
                     classes={{
                         root: classes.bottomNavigation,
                         selected: classes.bottomNavigationActiveColor
@@ -68,7 +71,7 @@ const CalculatorView: React.FC<{}> = () => {
                 <BottomNavigationAction
                     label="Volume"
                     value={CalculationType.VOLUME}
-                    icon={<VolumeIcon  style={{color: currentTab === CalculationType.VOLUME ? "white" : theme.palette.action.disabled}}/>}
+                    icon={<VolumeIcon style={{ color: props.currentTab === CalculationType.VOLUME ? "white" : theme.palette.action.disabled }} />}
                     classes={{
                         root: classes.bottomNavigation,
                         selected: classes.bottomNavigationActiveColor
@@ -77,7 +80,7 @@ const CalculatorView: React.FC<{}> = () => {
                 <BottomNavigationAction
                     label="Count"
                     value={CalculationType.COUNT}
-                    icon={<CountIcon  style={{color: currentTab === CalculationType.COUNT ? "white" : theme.palette.action.disabled}}/>}
+                    icon={<CountIcon style={{ color: props.currentTab === CalculationType.COUNT ? "white" : theme.palette.action.disabled }} />}
                     classes={{
                         root: classes.bottomNavigation,
                         selected: classes.bottomNavigationActiveColor
