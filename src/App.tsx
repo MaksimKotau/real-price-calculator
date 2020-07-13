@@ -1,7 +1,7 @@
 import React from 'react';
 import MainView from './views/MainView'
 import StoreProvider from './state/state'
-import Theme from './views/Theme';
+import Theme from './styles/Theme';
 
 function App() {
   return (

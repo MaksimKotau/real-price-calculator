@@ -60,7 +60,7 @@ const MainView: React.FC<{}> = () => {
     const classes = useStyles();
     const {dispatch} = useStore();
     const [activeHistory, setActiveHistory] = useState<boolean>(false);
-    const [claculationTab, setCalculationTab] = useState<CalculationType>(CalculationType.WEIGHT);
+    const [calculationTab, setCalculationTab] = useState<CalculationType>(CalculationType.WEIGHT);
     const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | undefined>(undefined);
     const [clearAnchorEl, setClearAnchorEl] = useState<HTMLElement | undefined>(undefined);
     const handleTabChange = (event: any, newValue: number) => {
@@ -84,42 +84,10 @@ const MainView: React.FC<{}> = () => {
     const handleCalculationTabChange = (tab: CalculationType) => {
         setCalculationTab(tab);
     }
-    const getClearLabel = ():string => {
-        if (activeHistory){
-            return "Clear History"
-        }else {
-            switch (claculationTab){
-                case CalculationType.COUNT: 
-                    return "Clear Count tab";
-                case CalculationType.VOLUME:
-                    return "Clear Volume tab";
-                case CalculationType.WEIGHT:
-                    return "Clear Weight tab";
-                default:
-                    return "";
-            }
-        }
-    }
-    const getClearFunction = (): () => void => {
-        if (activeHistory){
-            return () => dispatch(clearHistory());
-        }else {
-            switch (claculationTab){
-                case CalculationType.COUNT: 
-                    return () => dispatch(clearCountCompare());
-                case CalculationType.VOLUME:
-                    return () => dispatch(clearVolumeCompare());
-                case CalculationType.WEIGHT:
-                    return () => dispatch(clearWeightCompare());
-                default:
-                    return () => {};
-            }
-        }
-    }
     const tabsArray = [
         <div key="Calculation" dir={theme.direction} className={classes.viewContainer}>
             <CalculatorView 
-                currentTab={claculationTab}
+                currentTab={calculationTab}
                 onTabChange={handleCalculationTabChange}
             />
         </div>,
@@ -180,8 +148,8 @@ const MainView: React.FC<{}> = () => {
             <ClearMenu 
                 anchorEl={clearAnchorEl}
                 onClose={handleCloseClear}
-                clearAction={getClearFunction()}
-                clearLabel={getClearLabel()}
+                clearAction={getClearFunction(activeHistory, calculationTab, dispatch)}
+                clearLabel={getClearLabel(activeHistory, calculationTab)}
             />
         </div >
     )
@@ -193,4 +161,37 @@ function a11yProps(index: number) {
         id: `simple-tab-${index === 0 ? "calculate" : "hystory"}`,
         'aria-controls': `simple-tabpanel-${index === 0 ? "calculate" : "hystory"}`,
     };
+}
+
+const getClearLabel = (activeHistory: boolean, calculationTab: CalculationType):string => {
+    if (activeHistory){
+        return "Clear History"
+    }else {
+        switch (calculationTab){
+            case CalculationType.COUNT: 
+                return "Clear Count tab";
+            case CalculationType.VOLUME:
+                return "Clear Volume tab";
+            case CalculationType.WEIGHT:
+                return "Clear Weight tab";
+            default:
+                return "";
+        }
+    }
+}
+const getClearFunction = (activeHistory: boolean, calculationTab: CalculationType, dispatch: any): () => void => {
+    if (activeHistory){
+        return () => dispatch(clearHistory());
+    }else {
+        switch (calculationTab){
+            case CalculationType.COUNT: 
+                return () => dispatch(clearCountCompare());
+            case CalculationType.VOLUME:
+                return () => dispatch(clearVolumeCompare());
+            case CalculationType.WEIGHT:
+                return () => dispatch(clearWeightCompare());
+            default:
+                return () => {};
+        }
+    }
 }
