@@ -1,9 +1,9 @@
-import React, { useState, MouseEvent } from "react";
-import { isMobile, isTablet, isBrowser } from "react-device-detect";
 import IconButton from "@material-ui/core/IconButton";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import ClearMenu from "../../views/menu/ClearMenu";
 import ClearAllIcon from "@material-ui/icons/ClearAll";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import React, { MouseEvent, useState } from "react";
+import { isMobile } from "react-device-detect";
+import ClearMenu from "../../views/menu/ClearMenu";
 
 interface OwnProps {
   backgroundColorSwipeRight?: string;
