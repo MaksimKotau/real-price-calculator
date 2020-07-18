@@ -30,8 +30,8 @@ import ClearAllIcon from "@material-ui/icons/ClearAll";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     mainContainer: {
-      width: "100vw",
-      height: "100vh",
+      width: "100%",
+      height: "100%",
       display: "flex",
       flexDirection: "column",
       backgroundColor: theme.palette.background.default,
