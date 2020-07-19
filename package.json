@@ -1,6 +1,6 @@
 {
   "name": "real-price-calculator",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.10.0",
@@ -33,19 +33,14 @@
     "extends": "react-app"
   },
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "production": [">0.2%", "not dead", "not op_mini all"],
+    "development": ["last 1 chrome version", "last 1 firefox version", "last 1 safari version"]
   },
   "devDependencies": {
     "@types/react-redux": "^7.1.9",
-    "@types/uniqid": "^5.2.0"
+    "@types/uniqid": "^5.2.0",
+    "gulp": "^4.0.2",
+    "gulp-json-editor": "^2.5.4",
+    "gulp-shell": "^0.8.0"
   }
 }
