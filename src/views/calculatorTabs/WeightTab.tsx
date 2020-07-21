@@ -78,7 +78,7 @@ export const getWeightMinId = (data: WeightCompareData[]) => {
         Math.abs(
           getPriceBy100g(el.unitType, el.count, el.price) -
             getPriceBy100g(data[0].unitType, data[0].count, data[0].price)
-        ) < 0.01
+        ) < 0.001
     )
   ) {
     return undefined;
@@ -111,7 +111,7 @@ export const getWeightMaxId = (data: WeightCompareData[]) => {
         Math.abs(
           getPriceBy100g(el.unitType, el.count, el.price) -
             getPriceBy100g(data[0].unitType, data[0].count, data[0].price)
-        ) < 0.01
+        ) < 0.001
     )
   ) {
     return undefined;
