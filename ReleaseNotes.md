@@ -1,3 +1,7 @@
+#### 0.1.4 - 2020-07-21
+
+- Calculation accuracy adjustment
+
 #### 0.1.3 - 2020-07-19
 
 - Icons and Manifest.json
