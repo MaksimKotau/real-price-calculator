@@ -1,68 +1,64 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Real price calculator
 
-## Available Scripts
 
-In the project directory, you can run:
+26 Jul 2020
 
-### `npm start`
+[Link to Real Price Calculator](https://maksimkotau.github.io/real-price-calculator/)
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+*Mobile PWA application for compare prices of goods in the store. Its interface is based on the principles of Material Design*
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+This application allows you to compare the prices of goods in different units of measurement (by quantity, volume and weight). It allows you to view the history of comparisons.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Compare price in weight units:
 
-### `npm run build`
+Available units for comparison:
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Gram
+- Kilogram
+- Ounce
+- Pound
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+![UI of the section for comparing goods which price is indicated per mass ](./public/images/RealPriceCalculator_mass_section.jpg)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## Compare price in volume units:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Available units for comparison:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Milliliter
+- Liter
+- Pint US
+- Quart US
+- Gallon US
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+![UI of the section for comparing goods which price is indicated per volume ](./public/images/RealPriceCalculator_section_volume.jpg)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+## Compare price by count:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+![UI of the section for comparing goods which price is indicated per count ](./public/images/RealPriceCalculator_section_count.jpg)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Every tab support delete element by swipe left action. Or you can delete all elements using top-right menu.
 
-### Code Splitting
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+## Adding a product for comparison
 
-### Analyzing the Bundle Size
+Adding a new product to comparison is intuitive and easy.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+![UI of adding a new product ](./public/images/RealPriceCalculator_add_new_product.jpg)
 
-### Making a Progressive Web App
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+## History view
 
-### Advanced Configuration
+History view allows you to view previous product comparisons.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+![UI of all histories view ](./public/images/RealPriceCalculator_history_all.jpg)
+![UI of history details ](./public/images/RealPriceCalculator_hystory_one.jpg)
 
-### Deployment
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+## Configuration
 
-### `npm run build` fails to minify
+In menu you can choose a light or dark theme
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+![UI of menu ](./public/images/RealPriceCalculator_menu.jpg)
