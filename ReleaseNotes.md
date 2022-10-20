@@ -1,3 +1,11 @@
+#### 0.1.6 - 2022-10-20
+
+- fix npm packages problems
+
+#### 0.1.5 - 2022-10-20
+
+- Deploy to Github pages
+
 #### 0.1.4 - 2020-07-21
 
 - Calculation accuracy adjustment
