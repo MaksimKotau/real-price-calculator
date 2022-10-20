@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/real-price-calculator/static/css/main.f49823c3.css",
+    "main.js": "/real-price-calculator/static/js/main.5939261d.js",
+    "index.html": "/real-price-calculator/index.html",
+    "main.f49823c3.css.map": "/real-price-calculator/static/css/main.f49823c3.css.map",
+    "main.5939261d.js.map": "/real-price-calculator/static/js/main.5939261d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f49823c3.css",
+    "static/js/main.5939261d.js"
+  ]
+}
