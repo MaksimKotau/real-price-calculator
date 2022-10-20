@@ -1,6 +1,7 @@
 {
   "name": "real-price-calculator",
   "version": "0.1.4",
+  "homepage": "https://MaksimKotau.github.io/real-price-calculator",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.12.4",
@@ -24,6 +25,8 @@
     "uniqid": "^5.4.0"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -47,6 +50,7 @@
   "devDependencies": {
     "@types/react-redux": "^7.1.24",
     "@types/uniqid": "^5.3.2",
+    "gh-pages": "^4.0.0",
     "gulp": "^4.0.2",
     "gulp-json-editor": "^2.5.6",
     "gulp-shell": "^0.8.0",
