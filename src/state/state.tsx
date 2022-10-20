@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext, useReducer, PropsWithChildren } from 'react';
 import CalculationType from "../enums/calculationType";
 import VolumeType from "../enums/volumeType";
 import WeightType from "../enums/weightType";
@@ -321,7 +321,7 @@ const getStateHistory = (state: ApplicationState, type: CalculationType): Applic
 
 const StoreContext = createContext<{ state: ApplicationState, dispatch: any }>({ state: getInitialState(), dispatch: () => { } });
 
-const StoreProvider: React.FC<{}> = (props) => {
+const StoreProvider: React.FC<PropsWithChildren<{}>> = (props) => {
     const [state, dispatch] = useReducer(
         withLocalStorageCache(appReducer),
         getInitialState()

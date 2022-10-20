@@ -1,14 +1,14 @@
 import teal from '@material-ui/core/colors/teal';
 import red from '@material-ui/core/colors/red';
-import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+import { createTheme } from '@material-ui/core/styles';
 import MuiThemeProvider from '@material-ui/styles/ThemeProvider';
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import { useStore } from '../state/state';
 
-const Theme: React.FC<{}> = (props) => {
+const Theme: React.FC<PropsWithChildren<{}>> = (props) => {
     const { state } = useStore();
-    const {isDark} = state.ui;
-    const theme = createMuiTheme({
+    const { isDark } = state.ui;
+    const theme = createTheme({
         palette: {
             primary: {
                 main: teal[800]

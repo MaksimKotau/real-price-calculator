@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, PropsWithChildren } from 'react'
 import { CSSTransition } from 'react-transition-group'
 
 interface OwnProps {
@@ -6,7 +6,7 @@ interface OwnProps {
     timeout: number;
 };
 
-const Fade: React.FC<OwnProps> = (props) => {
+const Fade: React.FC<PropsWithChildren<OwnProps>> = (props) => {
     const nodeRef = useRef<HTMLDivElement>(null);
     return (
         <CSSTransition

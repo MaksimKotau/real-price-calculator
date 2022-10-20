@@ -1,7 +1,7 @@
 import IconButton from "@material-ui/core/IconButton";
 import ClearAllIcon from "@material-ui/icons/ClearAll";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import React, { MouseEvent, useState } from "react";
+import React, { MouseEvent, useState, PropsWithChildren } from "react";
 import { isMobile } from "react-device-detect";
 import ClearMenu from "../../views/menu/ClearMenu";
 
@@ -22,7 +22,7 @@ interface OwnProps {
   onClick?: () => void;
 }
 
-const SwipableCard: React.FC<OwnProps> = (props) => {
+const SwipableCard: React.FC<PropsWithChildren<OwnProps>> = (props) => {
   const [xPosition, setXPosition] = useState<null | number>(null);
   const [xDiff, setXDiff] = useState<null | number>(null);
   const [clearAnchorEl, setClearAnchorEl] = useState<HTMLElement | undefined>(
